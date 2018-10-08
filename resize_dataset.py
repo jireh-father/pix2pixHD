@@ -10,7 +10,9 @@ if not os.path.isdir(output_dir):
 
 image_filenames = glob.glob(os.path.join(target_dir, "*.jpg"))
 image_size = 512
-for fn in image_filenames:
+t = len(image_filenames)
+for i, fn in enumerate(image_filenames):
+    print(t, i)
     im = Image.open(fn)
     old_size = im.size  # old_size[0] is in (width, height) format
     desired_size = image_size
@@ -22,5 +24,5 @@ for fn in image_filenames:
     new_im = Image.new("RGB", (desired_size, desired_size), "white")
     new_im.paste(im, ((desired_size - new_size[0]) // 2,
                       (desired_size - new_size[1]) // 2))
-    new_im.save(os.path.join(output_dir, os.path.basename(target_dir)))
+    new_im.save(os.path.join(output_dir, os.path.basename(fn)))
     img = np.asarray(new_im)
